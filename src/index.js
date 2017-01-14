@@ -43,7 +43,8 @@ var updateActors = function(db, callback) {
                "update" : {
                  "$set" : {
                    "description" : (actor.data.description || "No description provided").replace('                                See full bio &raquo;', ''),
-                   "image" : actor.data.image
+                   "image" : actor.data.image,
+                   "occupation": actor.data.occupation
                  }
                }
           }
