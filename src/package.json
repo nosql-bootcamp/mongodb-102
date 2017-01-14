@@ -1,0 +1,8 @@
+{
+  "name": "mongodb-102",
+  "version": "1.0.0",
+  "dependencies": {
+    "csv-parser": "1.11.0",
+    "mongodb": "2.2.21"
+  }
+}
