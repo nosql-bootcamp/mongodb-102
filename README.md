@@ -80,6 +80,10 @@ Ce code est disponible dans le fichier `src/insert_actors.js`. Vous pouvez l'ex�
 
 ```bash
 cd src
+
+# A ne lancer qu'une seule fois pour récupérer les dépendances
+npm install
+
 node insert_actors.js
 ```
 
@@ -142,6 +146,10 @@ Ce code est disponible dans le fichier `src/update_actors.js`. Vous pouvez l'ex�
 
 ```bash
 cd src
+
+# A ne lancer qu'une seule fois pour récupérer les dépendances
+npm install
+
 node update_actors.js
 ```
 
