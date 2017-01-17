@@ -10,6 +10,27 @@
 
 Ce workshop est basé sur la **version 3.4.1** de MongoDB.
 
+## Pré requis
+
+Nous considérons que vous avez déjà réalisé les workshops suivants :
+
+* [mongodb-101](https://github.com/nosql-bootcamp/mongodb-101)
+
+Vous allez également avoir besoin de [Node.js](https://nodejs.org). Si ce n'est pas déjà fait, [installez `node` et `npm`](https://nodejs.org/en/download/) sur votre machine.
+
+Vérifiez les versions installées de `node` (minimum `v6.x`) et `npm` (minimum `v3.x`) :
+
+```bash
+node -v
+v6.9.2
+```
+
+```bash
+npm -v
+3.10.9
+```
+
+
 ## Le jeu de données
 
 Le jeu de données utilisé pour le workshop est un ensemble d'actrices et d'acteurs, issus de la base [IMDb](http://www.imdb.com/).
