@@ -6,9 +6,9 @@
 
 <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons Licence" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a>
 
-<span xmlns:dct="http://purl.org/dc/terms/" property="dct:title">mongodb-102</span> par <a xmlns:cc="http://creativecommons.org/ns#" href="https://github.com/nosql-bootcamp/mongodb-102" property="cc:attributionName" rel="cc:attributionURL">Chris WOODROW et Sébastien PRUNIER</a> est distribué sous les termes de la licence <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons - Attribution - NonCommercial - ShareAlike</a>.
+<span xmlns:dct="http://purl.org/dc/terms/" property="dct:title">mongodb-102</span> par <a xmlns:cc="http://creativecommons.org/ns#" href="https://github.com/nosql-bootcamp/mongodb-102" property="cc:attributionName" rel="cc:attributionURL">Chris WOODROW, Sébastien PRUNIER et Benjamin CAVY</a> est distribué sous les termes de la licence <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons - Attribution - NonCommercial - ShareAlike</a>.
 
-Ce workshop est basé sur la **version 3.4.1** de MongoDB.
+Ce workshop est basé sur la **version 3.6.0** de MongoDB.
 
 ## Pré requis
 
@@ -18,16 +18,16 @@ Nous considérons que vous avez déjà réalisé les workshops suivants :
 
 Vous allez également avoir besoin de [Node.js](https://nodejs.org). Si ce n'est pas déjà fait, [installez `node` et `npm`](https://nodejs.org/en/download/) sur votre machine.
 
-Vérifiez les versions installées de `node` (minimum `v6.x`) et `npm` (minimum `v3.x`) :
+Vérifiez les versions installées de `node` (minimum `v9.x`) et `npm` (minimum `v5.x`) :
 
 ```bash
 node -v
-v6.9.2
+v9.2.0
 ```
 
 ```bash
 npm -v
-3.10.9
+5.5.1
 ```
 
 
@@ -52,8 +52,8 @@ La dépendance au driver MongoDB est déjà présente dans le fichier `package.j
 
 ```json
 "dependencies": {
-  "csv-parser": "1.11.0",
-  "mongodb": "2.2.21"
+  "csv-parser": "1.12.0",
+  "mongodb": "2.2.33"
 }
 ```
 
@@ -64,17 +64,17 @@ L'objectif de cette première partie est d'alimenter une collection `actors` à 
 Pour cela nous nous appuyons sur le module `csv-parser` pour lire le fichier CSV et sur la méthode `insertMany()` de MongoDB :
 
 ```javascript
-var mongodb = require('mongodb');
-var csv = require('csv-parser');
-var fs = require('fs');
+const mongodb = require('mongodb');
+const csv = require('csv-parser');
+const fs = require('fs');
 
-var MongoClient = mongodb.MongoClient;
-var mongoUrl = 'mongodb://localhost:27017/workshop';
+const MongoClient = mongodb.MongoClient;
+const mongoUrl = 'mongodb://localhost:27017/workshop';
 
-var insertActors = function(db, callback) {
-    var collection = db.collection('actors');
+const insertActors = (db, callback) => {
+    const collection = db.collection('actors');
 
-    var actors = [];
+    const actors = [];
     fs.createReadStream('./data/Top_1000_Actors_and_Actresses.csv')
         .pipe(csv())
         // Pour chaque ligne on créé un document JSON pour l'acteur correspondant
@@ -120,13 +120,13 @@ L'objectif de cette seconde partie est de compléter chaque document de la colle
 Pour cela nous nous appuyons sur la méthode `bulkWrite()` de MongoDB :
 
 ```javascript
-var mongodb = require('mongodb');
-var fs = require('fs');
+const mongodb = require('mongodb');
+const fs = require('fs');
 
-var MongoClient = mongodb.MongoClient;
-var mongoUrl = 'mongodb://localhost:27017/workshop';
+const MongoClient = mongodb.MongoClient;
+const mongoUrl = 'mongodb://localhost:27017/workshop';
 
-var actorToUpdateQuery = function(actor) {
+const actorToUpdateQuery = (actor) => {
     return {
         "updateOne": {
             "filter": {
@@ -143,15 +143,15 @@ var actorToUpdateQuery = function(actor) {
     };
 }
 
-var updateActors = function(db, callback) {
-    var collection = db.collection('actors');
+const updateActors = (db, callback) => {
+    const collection = db.collection('actors');
 
     fs.readFile('./data/Top_1000_Actors_and_Actresses.json', 'utf8', (err, data) => {
-        var updates = data.split('\n')
-            // Chaque ligne correspond à un document JSON décrivant un acteur en détail
-            .map(line => JSON.parse(line))
-            // On transforme chaque ligne en requête de mise à jour qui sera utilisée dans un 'bulkWrite()'
-            .map(actor => actorToUpdateQuery(actor));
+        const updates = data.split('\n')
+              // Chaque ligne correspond à un document JSON décrivant un acteur en détail
+              .map(line => JSON.parse(line))
+              // On transforme chaque ligne en requête de mise à jour qui sera utilisée dans un 'bulkWrite()'
+              .map(actor => actorToUpdateQuery(actor));
 
         collection.bulkWrite(updates, (err, result) => {
             callback(result);
