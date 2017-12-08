@@ -1,14 +1,14 @@
-var mongodb = require('mongodb');
-var csv = require('csv-parser');
-var fs = require('fs');
+const mongodb = require('mongodb');
+const csv = require('csv-parser');
+const fs = require('fs');
 
-var MongoClient = mongodb.MongoClient;
-var mongoUrl = 'mongodb://localhost:27017/workshop';
+const MongoClient = mongodb.MongoClient;
+const mongoUrl = 'mongodb://localhost:27017/workshop';
 
-var insertActors = function(db, callback) {
-    var collection = db.collection('actors');
+const insertActors = (db, callback) => {
+    const collection = db.collection('actors');
 
-    var actors = [];
+    const actors = [];
     fs.createReadStream('./data/Top_1000_Actors_and_Actresses.csv')
         .pipe(csv())
         // Pour chaque ligne on créé un document JSON pour l'acteur correspondant
