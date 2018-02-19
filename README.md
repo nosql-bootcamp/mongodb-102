@@ -18,11 +18,11 @@ Nous considérons que vous avez déjà réalisé les workshops suivants :
 
 Vous allez également avoir besoin de [Node.js](https://nodejs.org). Si ce n'est pas déjà fait, [installez `node` et `npm`](https://nodejs.org/en/download/) sur votre machine.
 
-Vérifiez les versions installées de `node` (minimum `v9.x`) et `npm` (minimum `v5.x`) :
+Vérifiez les versions installées de `node` (minimum `v8.x`) et `npm` (minimum `v5.x`) :
 
 ```bash
 node -v
-v9.2.0
+v8.9.3
 ```
 
 ```bash
