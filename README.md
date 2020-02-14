@@ -8,7 +8,7 @@
 
 <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title">mongodb-102</span> par <a xmlns:cc="http://creativecommons.org/ns#" href="https://github.com/nosql-bootcamp/mongodb-102" property="cc:attributionName" rel="cc:attributionURL">Chris WOODROW, Sébastien PRUNIER et Benjamin CAVY</a> est distribué sous les termes de la licence <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons - Attribution - NonCommercial - ShareAlike</a>.
 
-Ce workshop est basé sur la **version 3.6.0** de MongoDB.
+Ce workshop est basé sur la **version 4.2.3** de MongoDB.
 
 ## Pré requis
 
@@ -18,16 +18,16 @@ Nous considérons que vous avez déjà réalisé les workshops suivants :
 
 Vous allez également avoir besoin de [Node.js](https://nodejs.org). Si ce n'est pas déjà fait, [installez `node` et `npm`](https://nodejs.org/en/download/) sur votre machine.
 
-Vérifiez les versions installées de `node` (minimum `v8.x`) et `npm` (minimum `v5.x`) :
+Vérifiez les versions installées de `node` (minimum `v10.x`) et `npm` (minimum `v6.x`) :
 
 ```bash
 node -v
-v8.9.3
+v10.16.0
 ```
 
 ```bash
 npm -v
-5.5.1
+6.9.0
 ```
 
 
@@ -44,7 +44,7 @@ Ces deux fichiers sont disponibles dans le dossier `src/data`.
 
 ## Driver natif MongoDB pour Node.js
 
-Les exemples de code du workshop se basent sur le [driver natif MongoDB pour Node.js](https://mongodb.github.io/node-mongodb-native/). La version utilisée est la [version 2.2](http://mongodb.github.io/node-mongodb-native/2.2/).
+Les exemples de code du workshop se basent sur le [driver natif MongoDB pour Node.js](https://mongodb.github.io/node-mongodb-native/). La version utilisée est la [version 3.5.x](https://mongodb.github.io/node-mongodb-native/3.5/).
 
 L'avantage d'utiliser Node.js et le driver natif est que la syntaxe des requêtes du driver est quasiment identique à celles effectuées dans le shell.
 
@@ -52,8 +52,8 @@ La dépendance au driver MongoDB est déjà présente dans le fichier `package.j
 
 ```json
 "dependencies": {
-  "csv-parser": "1.12.0",
-  "mongodb": "2.2.33"
+    "csv-parser": "2.3.2",
+    "mongodb": "3.5.3"
 }
 ```
 
@@ -69,7 +69,8 @@ const csv = require('csv-parser');
 const fs = require('fs');
 
 const MongoClient = mongodb.MongoClient;
-const mongoUrl = 'mongodb://localhost:27017/workshop';
+const mongoUrl = 'mongodb://localhost:27017';
+const dbName = 'mongo102';
 
 const insertActors = (db, callback) => {
     const collection = db.collection('actors');
@@ -93,10 +94,15 @@ const insertActors = (db, callback) => {
         });
 }
 
-MongoClient.connect(mongoUrl, (err, db) => {
+MongoClient.connect(mongoUrl, (err, client) => {
+    if (err) {
+        console.error(err);
+        throw err;
+    }
+    const db = client.db(dbName);
     insertActors(db, result => {
         console.log(`${result.insertedCount} actors inserted`);
-        db.close();
+        client.close();
     });
 });
 ```
@@ -124,7 +130,8 @@ const mongodb = require('mongodb');
 const fs = require('fs');
 
 const MongoClient = mongodb.MongoClient;
-const mongoUrl = 'mongodb://localhost:27017/workshop';
+const mongoUrl = 'mongodb://localhost:27017';
+const dbName = 'mongo102';
 
 const actorToUpdateQuery = (actor) => {
     return {
@@ -159,10 +166,15 @@ const updateActors = (db, callback) => {
     });
 }
 
-MongoClient.connect(mongoUrl, (err, db) => {
+MongoClient.connect(mongoUrl, (err, client) => {
+    if (err) {
+        console.error(err);
+        throw err;
+    }
+    const db = client.db(dbName);
     updateActors(db, result => {
         console.log(`${result.modifiedCount} actors updated`);
-        db.close();
+        client.close();
     });
 });
 ```

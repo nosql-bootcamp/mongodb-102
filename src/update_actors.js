@@ -2,7 +2,8 @@ const mongodb = require('mongodb');
 const fs = require('fs');
 
 const MongoClient = mongodb.MongoClient;
-const mongoUrl = 'mongodb://localhost:27017/workshop';
+const mongoUrl = 'mongodb://localhost:27017';
+const dbName = 'mongo102';
 
 const actorToUpdateQuery = (actor) => {
     return {
@@ -37,9 +38,14 @@ const updateActors = (db, callback) => {
     });
 }
 
-MongoClient.connect(mongoUrl, (err, db) => {
+MongoClient.connect(mongoUrl, (err, client) => {
+    if (err) {
+        console.error(err);
+        throw err;
+    }
+    const db = client.db(dbName);
     updateActors(db, result => {
         console.log(`${result.modifiedCount} actors updated`);
-        db.close();
+        client.close();
     });
 });
