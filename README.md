@@ -194,6 +194,12 @@ node update_actors.js
 
 A vous de jouer pour exécuter quelques requêtes intéressantes sur les données !
 
+Assurez-vous au préalable d'utiliser la bonne base sur laquelle se trouvent les données :
+
+```javascript
+use mongo102
+```
+
 Par exemple pour récupérer l'acteur le plus vieux du Top 1000 :
 
 ```javascript
