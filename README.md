@@ -1,6 +1,6 @@
 # MongoDB 102
 
-![mongo-logo](https://upload.wikimedia.org/wikipedia/en/thumb/4/45/MongoDB-Logo.svg/300px-MongoDB-Logo.svg.png)
+![mongo-logo](https://upload.wikimedia.org/wikipedia/fr/4/45/MongoDB-Logo.svg)
 
 **MongoDB 102** est un workshop permettant de découvrir le driver Node.js natif pour MongoDB.
 
